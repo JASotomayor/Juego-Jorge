@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users — readable by any authenticated user, writable only by owner
+    match /users/{uid} {
+      allow read:  if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Usernames — readable by all auth users (for search/lookup), writable by auth users
+    match /usernames/{username} {
+      allow read:  if request.auth != null;
+      allow create: if request.auth != null;
+    }
+
+    // Game sessions — users can read/write only their own
+    match /game_sessions/{sessionId} {
+      allow read:  if request.auth != null
+                   && (resource == null || resource.data.userId == request.auth.uid);
+      allow create: if request.auth != null
+                    && request.resource.data.userId == request.auth.uid;
+    }
+
+    // Ranking — allow any auth user to read all sessions (for global ranking)
+    match /game_sessions/{sessionId} {
+      allow read: if request.auth != null;
+    }
+
+    // Connections — parties of the connection can read/write
+    match /connections/{connectionId} {
+      allow read: if request.auth != null
+                  && (resource.data.requesterId == request.auth.uid
+                   || resource.data.receiverId  == request.auth.uid);
+      allow create: if request.auth != null
+                    && request.resource.data.requesterId == request.auth.uid;
+      allow update: if request.auth != null
+                    && (resource.data.requesterId == request.auth.uid
+                     || resource.data.receiverId  == request.auth.uid);
+    }
+
+    // Challenges — parties can read/write
+    match /challenges/{challengeId} {
+      allow read: if request.auth != null
+                  && (resource.data.challengerId == request.auth.uid
+                   || resource.data.challengedId == request.auth.uid);
+      allow create: if request.auth != null
+                    && request.resource.data.challengerId == request.auth.uid;
+      allow update: if request.auth != null
+                    && (resource.data.challengerId == request.auth.uid
+                     || resource.data.challengedId == request.auth.uid);
+    }
+  }
+}

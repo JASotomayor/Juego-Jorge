@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Environment variables — NUNCA subir al repo
+.env
+.env.local
+.env.production
+.env*.local
+
+# Debug
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vercel
+.vercel
