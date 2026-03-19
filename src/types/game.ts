@@ -1,6 +1,4 @@
-import type { Difficulty } from './database'
-
-export type { Difficulty }
+export type Difficulty = 'easy' | 'medium' | 'hard'
 
 export interface CardData {
   id: string       // unique position id e.g. "0-a", "0-b"

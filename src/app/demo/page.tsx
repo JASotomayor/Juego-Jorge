@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { GameScreen } from '@/components/game/GameScreen'
 
 // Ruta pública de demo — no requiere auth, no guarda scores

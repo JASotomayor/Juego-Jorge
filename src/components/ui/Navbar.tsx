@@ -49,7 +49,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <Link href="/profile" className="flex items-center gap-2 hover:opacity-80 transition">
             <Image
-              src={getAvatarUrl(profile?.avatar_url ?? null, profile?.username ?? 'user')}
+              src={getAvatarUrl(profile?.avatarUrl ?? null, profile?.username ?? 'user')}
               alt="Mi perfil"
               width={36}
               height={36}
@@ -87,7 +87,7 @@ export function Navbar() {
           ))}
           <Link href="/profile" className="flex flex-col items-center gap-0.5 px-3 py-1">
             <Image
-              src={getAvatarUrl(profile?.avatar_url ?? null, profile?.username ?? 'user')}
+              src={getAvatarUrl(profile?.avatarUrl ?? null, profile?.username ?? 'user')}
               alt="Perfil"
               width={28}
               height={28}
